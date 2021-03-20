@@ -1,9 +1,10 @@
+import typing as t
 import numpy as np
 import matplotlib.pyplot as plt
 
 
-def main():
-    x = [-20, -3, -4, 0, 1, 5, 6, 7, 20]
+def main() -> None:
+    x = [0, 1, 2, 3, 4, 5, 6]
     x.sort()
 
     y = [function(value) for value in x]
@@ -12,7 +13,7 @@ def main():
     y_triplets = build_triplets(y)
 
     x_general = []
-    lagr = []
+    interpolant = []
 
     for i in range(len(x_triplets)):
         x_new = np.linspace(x_triplets[i][0], x_triplets[i][-1], 50)
@@ -23,17 +24,17 @@ def main():
             x_triplets[i].insert(1, additional_x)
             y_triplets[i].insert(1, additional_y)
         for j in x_new:
-            lagr.append(lagrange(y_triplets[i], x_triplets[i], j))
+            interpolant.append(lagrange(y_triplets[i], x_triplets[i], j))
 
-    plt.plot(x, y, 'o', x_general, lagr)
+    plt.plot(x, y, 'o', x_general, interpolant)
     plt.show()
 
 
-def function(value):
+def function(value: t.Union[int, float]) -> float:
     return np.cos(value)
 
 
-def build_triplets(x: list):
+def build_triplets(x: t.List[float]) -> t.List[t.List[float]]:
     triplets = []
     for i in range(0, len(x), 2):
         if i == 0:
@@ -47,7 +48,7 @@ def build_triplets(x: list):
     return triplets
 
 
-def lagrange(y_triplet, x_triplet, x):
+def lagrange(y_triplet: t.List[float], x_triplet: t.List[float], x: float) -> float:
     return y_triplet[0] * ((x - x_triplet[1]) * (x - x_triplet[2])) / (
                 (x_triplet[0] - x_triplet[1]) * (x_triplet[0] - x_triplet[2])) \
            + y_triplet[1] * ((x - x_triplet[0]) * (x - x_triplet[2])) / (
