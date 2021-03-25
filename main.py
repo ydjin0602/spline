@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 def main() -> None:
-    x = [0, 1, 2, 3, 4, 5, 6]
+    x = [-20, -4, -3, 0, 1, 5, 6, 7, 20, 50]
     x.sort()
 
     y = [function(value) for value in x]
@@ -20,7 +20,7 @@ def main() -> None:
         x_general.extend(x_new)
         if len(x_triplets[i]) == 2:
             additional_x = (x_triplets[i][0] + x_triplets[i][1]) / 2
-            additional_y = function(additional_x)
+            additional_y = (y_triplets[i][0] + y_triplets[i][1]) / 2
             x_triplets[i].insert(1, additional_x)
             y_triplets[i].insert(1, additional_y)
         for j in x_new:
